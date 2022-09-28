@@ -1,0 +1,15 @@
+# http://EditorConfig.org
+# https://gds-way.cloudapps.digital/manuals/programming-languages/editorconfig
+# Copy into project root and rename to .editorconfig
+
+# uncomment if top-most EditorConfig file
+root = true
+
+[*.java]
+indent_size = 4
+indent_style = space
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = false
+continuation_indent_size = 8
