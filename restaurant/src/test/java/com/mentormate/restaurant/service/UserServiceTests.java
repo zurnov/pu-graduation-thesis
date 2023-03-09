@@ -1,5 +1,6 @@
 package com.mentormate.restaurant.service;
 
+import com.mentormate.restaurant.exception.NotFoundException;
 import com.mentormate.restaurant.model.Role;
 import com.mentormate.restaurant.model.User;
 import com.mentormate.restaurant.repository.UserRepository;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
@@ -45,20 +47,21 @@ class UserServiceTests {
                 TestHelper.IS_DELETED_FALSE,
                 role);
 
-        when(userRepository.findById(expectedUser.getId())).thenReturn(Optional.of(expectedUser));
-
-        User actualUser = userService.findById(expectedUser.getId());
-
-        assertEquals(expectedUser.getId(), actualUser.getId());
-    }
-
-    @Test
-    void whenGetUserByIdWithNotExistingUser_thenNull() {
-        when(userRepository.findById(TestHelper.ID_1)).thenReturn(Optional.empty());
+        when(userRepository.findById(TestHelper.ID_1)).thenReturn(Optional.of(expectedUser));
 
         User actualUser = userService.findById(TestHelper.ID_1);
 
-        assertNull(actualUser);
+        assertEquals(expectedUser, actualUser);
+    }
+    
+    @Test
+    void whenGetUserByIdWithNotExistingUser_thenNull() {
+        
+        Optional<User> optionalUser = Optional.empty();
+        when(userRepository.findById(TestHelper.ID_1)).thenReturn(optionalUser);
+        
+        assertThrows(NotFoundException.class, () -> userService.findById(TestHelper.ID_1));
+        
     }
 
     @Test
@@ -171,7 +174,7 @@ class UserServiceTests {
                 TestHelper.IS_DELETED_FALSE,
                 role);
 
-        when(userRepository.findById(expectedUser.getId())).thenReturn(Optional.of(expectedUser));
+        when(userRepository.findById(TestHelper.ID_1)).thenReturn(Optional.of(expectedUser));
         when(userRepository.saveAndFlush(expectedUser)).thenReturn(expectedUser);
 
         User actualUser = userService.delete(expectedUser.getId());
@@ -192,7 +195,7 @@ class UserServiceTests {
                 TestHelper.IS_DELETED_FALSE,
                 role);
 
-        when(userRepository.findById(expectedUser.getId())).thenReturn(Optional.empty());
+        when(userRepository.findById(TestHelper.ID_1)).thenReturn(Optional.empty());
 
         User actualUser = userService.delete(expectedUser.getId());
 
@@ -247,7 +250,7 @@ class UserServiceTests {
                 TestHelper.IS_DELETED_FALSE,
                 role);
 
-        when(userRepository.findById(expectedUser.getId())).thenReturn(Optional.empty());
+        when(userRepository.findById(TestHelper.ID_1)).thenReturn(Optional.empty());
 
         User actualUser = userService.update(expectedUser.getId(), expectedUser);
 
