@@ -23,6 +23,5 @@ jobs:
     - name: Test with Gradle
       uses: gradle/gradle-build-action@v1
       with:
-        distribution: 'wrapper'
         arguments: test --stacktrace
-        
+        distribution: 'wrapper'
