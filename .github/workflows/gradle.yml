@@ -16,6 +16,12 @@ jobs:
     - name: Grant execute permission for Gradlew
       run: chmod +x ./gradlew
     - name: Build with Gradle
-      run: ./gradlew build --stacktrace
+      uses: gradle/gradle-build-action@v1.10.0
+      with:
+        arguments: build --stacktrace
+        distribution: 'wrapper'
     - name: Test with Gradle
-      run: ./gradlew test --stacktrace
+      uses: gradle/gradle-build-action@v1.10.0
+      with:
+        arguments: test --stacktrace
+        distribution: 'wrapper'
