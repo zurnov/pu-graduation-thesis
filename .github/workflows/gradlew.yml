@@ -1,24 +1,22 @@
-name: Build
+name: Java Gradle Build
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Setup JDK
+    - name: Setup Java JDK
       uses: actions/setup-java@v2
       with:
         java-version: '11'
 
     - name: Build with Gradle
       run: ./gradlew build
-
