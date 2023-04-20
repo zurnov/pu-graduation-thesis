@@ -26,6 +26,8 @@ jobs:
           java-version: 17
           distribution: 'adopt'
           cache: gradle
+      - name: Change file permissions
+        run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build --scan --no-daemon
   build-with-gradle-build-action-cache:
@@ -50,6 +52,8 @@ jobs:
           java-version: 17
           distribution: 'adopt'
           cache: gradle
+      - name: Change file permissions
+        run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build --scan --no-daemon
       - name: Archive test report
