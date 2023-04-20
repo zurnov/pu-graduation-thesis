@@ -14,6 +14,8 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
+      - name: Change file permissions
+        run: chmod +x gradlew          
       - name: Build with Gradle
         run: ./gradlew build --scan
   build-with-setup-java-cache:
